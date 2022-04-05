@@ -8,7 +8,7 @@ import {
   Jumbotron,
 } from 'react-bootstrap';
 import items from './data';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
 
@@ -37,11 +37,11 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">
-                <Link to="/">Home</Link>
+              <Nav.Link as={Link} to="/">
+                Home
               </Nav.Link>
-              <Nav.Link href="/detail">
-                <Link to="/detail">Detail</Link>
+              <Nav.Link as={Link} to="/detail">
+                Detail
               </Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
