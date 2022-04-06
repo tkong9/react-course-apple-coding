@@ -11,6 +11,16 @@ import items from './data';
 import { useEffect, useState } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
+import axios from 'axios';
+import styled from 'styled-components';
+
+const Loading = styled.h2`
+  text-align: center;
+`;
+
+const Failed = styled.h2`
+  text-align: center;
+`;
 
 function Item(props) {
   return (
@@ -28,6 +38,9 @@ function Item(props) {
 
 function App() {
   let [shoes, setShoes] = useState(items);
+  let [isLoading, setIsLoading] = useState(true);
+  let [isFailed, setIsFailed] = useState(false);
+  useEffect(() => {}, [shoes]);
 
   return (
     <div className="App">
@@ -77,6 +90,27 @@ function App() {
               })}
             </div>
           </div>
+          {isLoading ? <Loading>Loading...</Loading> : null}
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              axios
+                .get('https://codingapple1.github.io/shop/data2.json')
+                .then((result) => {
+                  console.log(result.data);
+                  console.log(shoes);
+                  setShoes([...shoes, ...result.data]);
+                  setIsLoading(false);
+                })
+                .catch(() => {
+                  console.log('요청실패시실행할코드');
+                  setIsFailed(true);
+                });
+            }}
+          >
+            더보기
+          </button>
+          {isFailed ? <Failed>Request Failed!</Failed> : null}
         </Route>
         <Route path="/detail/:id">
           <Detail shoes={shoes}></Detail>
