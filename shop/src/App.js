@@ -40,6 +40,7 @@ function App() {
   let [shoes, setShoes] = useState(items);
   let [isLoading, setIsLoading] = useState(true);
   let [isFailed, setIsFailed] = useState(false);
+  let [stockCount, setStockCount] = useState([7, 8, 9]);
   useEffect(() => {}, [shoes]);
 
   return (
@@ -113,7 +114,11 @@ function App() {
           {isFailed ? <Failed>Request Failed!</Failed> : null}
         </Route>
         <Route path="/detail/:id">
-          <Detail shoes={shoes}></Detail>
+          <Detail
+            shoes={shoes}
+            stockCount={stockCount}
+            setStockCount={setStockCount}
+          ></Detail>
         </Route>
       </Switch>
     </div>

@@ -28,6 +28,7 @@ function Detail(props) {
     <div className="container">
       <div className="row">
         <MoreInfo>Detail</MoreInfo>
+        {inputContent}
         <input onChange={(e) => setInputContent(e.target.value)}></input>
         {alert ? (
           <div className="my-alert">
@@ -44,8 +45,18 @@ function Detail(props) {
         <div className="col-md-6 mt-4">
           <h4 className="pt-5">{props.shoes[id].title}</h4>
           <p>{props.shoes[id].content}</p>
-          <p>{props.shoes[id].price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <p>{props.shoes[id].price}원</p>
+          <Stock stockCount={props.stockCount[id]}></Stock>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              let newStockCounts = [...props.stockCount];
+              if (newStockCounts[id] > 0) newStockCounts[id] -= 1;
+              props.setStockCount(newStockCounts);
+            }}
+          >
+            주문하기
+          </button>
           <button
             className="btn btn-danger"
             onClick={() => {
@@ -58,6 +69,10 @@ function Detail(props) {
       </div>
     </div>
   );
+}
+
+function Stock(props) {
+  return <p>재고: {props.stockCount}</p>;
 }
 
 export default Detail;
